@@ -4,21 +4,23 @@
 
 slide 108 InterfacciaUtenteACaratteri.pdf
 
-$? E' una variabile d'ambiente che cattura il risultato di un programma chiamato da uno script
+`$?` E' una variabile d'ambiente che cattura il risultato di un programma chiamato da uno script
 
-- !     NOT
-- &&    AND
-- ||    OR
+- `!`     NOT
+- `&&`    AND
+- `||`    OR
 
 si scrive cosi'
 
 ``` bash
 
 [[ ( (condA)&&(condB) ) || condC ]]
+# le tonde servono per dare l'ordine di esecuzione
 ```
 
-[[]] supportano la valutazione aritmetica all'interno, quelle singole no
-(tra l'altro prima c'era un altra sintassi con [] o 'test', ma hanno dei problemini, ergo usa sempre [[]])
+`[[]]` supportano la valutazione aritmetica all'interno, quelle singole no
+(tra l'altro prima c'era un altra sintassi con [] o 'test', ma hanno dei problemini, ergo usa sempre [[]]).
+Returnano 0 (true) o != 0 (false).
 
 Gli spazi servono perche' altrimenti alla shell sembra un unico comando
 
@@ -37,6 +39,7 @@ dentro le espressioni condizionali si possono usare le espansioni per le variabi
 
 ### scarrellata di operatori:
 
+* aritm   lessicografici
 * -eq   =
 * -ne   !=
 * -le   <=
@@ -69,6 +72,22 @@ echo $?
 
 Analogamente -n <stringa>:
 da 0 se la stringa e' piu' lunga di 0 (non e' vuota)
+
+
+### COndizioni su file
+
+`-d` file       True if file exists and is a directory.
+`-e` file       True if file exists.
+`-f` file       True if file exists and is a regular file.
+`-h` file       True if file exists and is a symbolic link.
+`-r` file       True if file exists and is readable.
+`-s` file       True if file exists and has a size greater than zero.
+`-t` fd         True if file descriptor fd is open and refers to a terminal.
+`-w` file       True if file exists and is writable.
+`-x` file       True if file exists and is executable.
+`-O` file       True if file exists and is owned by the effective user id.
+`-G` file       True if file exists and is owned by the effective group id.
+`-L` file       True if file exists and is a symbolic link. (deprecated, see -h)
 
 ---
 
