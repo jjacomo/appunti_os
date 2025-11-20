@@ -212,4 +212,190 @@ echo "il PID di program.exe e\' ${PIDsalvato} "
 wait ${PIDsalvato} # attende la terminazione di program.exe
 ```
 
+processi zombie (?)
+
 Siamo arrivati a slide p194
+
+
+---
+
+# 19/11/2025
+
+Lezione in aula con ghini.
+
+
+Ritorniamo a `wait`.
+E' usato perche' il processo padre a volte vuole sapere l'exit status del processo figlio.
+il processo zombie e' un processo figlio finito (morto) ma non ancora riconosciuto dal padre come morto (il padre e' acnora vivo) con la wait e quindi la memoria per le info sul processo e' ancora allocata ma il processo e' morto.
+Viceversa se il processo padre finisce (muore) senza fare wait e quindi ha lasciato dei processi figli in giro questi diventano orfani e vengono adottati dal processo `init`. 
+A volte il processo init chiama la wait per fare terminare i processi (?)
+
+Il processo padre puo' non voler fare la wait perche' era difficile da programmare (cosi' di sicuro e' piu' semplice -0'ld').
+Comunque della wait ne abbiamo gia' parlato con ferretti se ti ricordi.
+
+
+## init
+
+E' il primo processo lanciato dopo aver fatto il boot.
+Fa partire i servizi, daemon, processi del sistema operativo, processo per il login dell'utente...
+
+
+## Distro Linux
+
+Linux Loader era il boot loader.
+La gestione dei pacchetti era tutta manuale.
+1995.
+Nasce il concetto di interfaccia virtuale.
+
+Dioca Ghini coi suoi amici al 2ndo anno ha progettato un sistema per aumentare la banda della rete dell'universita' (da 2mb a 30mb) sfruttando le antenne radio e il protocollo IP.
+
+### Debian
+
+Una delle prime, ha generato diverse derivate (tipo `Ubuntu`).
+Una delle piu' stabili (per aggiungere un pacchetto lo controllano bene e ci mettono un po').
+Gestore di pacchetti apt (ultimamente anche snapd).
+
+### Red Hat 
+
+E' diventato privato (lo hanno comprato).
+Comunque roba seria...
+
+### ROcky Linux
+
+Versione ancora open di Red Hat (creata quando l'hanno comprata)
+
+### Alpine Linux
+
+Minimalissima, decidi tutto tu cosa metterci.
+Utilissima quando vuoi mettere su roba nei container (e' molto leggera).
+Gestore dei pacchetti apk (non e' il massimo).
+
+### Gentoo
+
+E' fuori di testa, ricompili sempre tutto quanto anche il kernel.
+Ogni volta che fai un aggiornamento devi ricompilare tutto e quindi ci mette un casino.
+Portage e' il packet manager.
+
+
+
+## boot
+
+### Fasi del boot
+
+1. boot loader carica kernel (non tutto) e initramfs (initial RAM file system).
+
+Il kernel linux non e' monolitico, non vengono caricati tutti i moduli subito, (moduli ad esempio driver (tipo del disco, finche' non li carica non puoi usare il disco)).
+initramfs e' un mini filesystem dove ci sono informazioni essenziali sui moduli (per il disco?).
+
+2. adesso il kernel puo' leggere dal file system e quindi caricare altra roba prendendola dalla memoria.
+    Riconosce tutto l'hardware e poi lancia il processo init (che ha PID 1)
+
+<!-- Da approfondire/finire -->
+
+
+## Crittografia
+
+Codifica: trasformare sequenze di byte in altre sequenze di byte.
+Decodifica: tornare indietro.
+
+
+Diversi tipi:
+* A chiave segreta (simmetrica): sono abbastanza sicuri.
+* A chiave pubblica (in realta' una pubblica e una privata, asimmetrica, RSA).
+* A chiave privata: poco sicura.
+
+Funzioni hash:
+* SHA-2 (secure hash algorithm)
+* SHA-3 
+*
+
+
+### chiave segreta.
+Entrambe le persone che vogliono leggere il messaggio (mittente e destinatario) devono avere la stessa chiave segreta.
+Infatti la chiave segreta e' usata sia per codificare che decodificare il messaggio.
+Algoritmi Triple-DES, AES.
+Piu' grande e' la chiave, maggiore e' la sicurezza.
+Se io ho n utenti che vogliono comunicare con gli altri abbiamo bisogno di molte coppie di chiavi, per ogni coppia di utenti bisogna avere una chiave per fare comunicare i due utenti tra loro (sono davvero tante).
+
+
+### chiave pubblica
+
+Entrambe le chiavi possono essere usate per codificare/decodificare ma per fare l'altra operazione devi usare l'altra chiave.
+
+```
+PublicKey ( PrivateKey (text) ) = text
+PrivateKey ( PublicKey (text) ) = text
+```
+
+Ogni utente ha la sua chiave privata che conosce SOLO lui.
+Poi ha la sua pubblica che invece devono conoscere tutti.
+Svantaggi: la codifica/decodifica e' molto piu' dispendiosa.
+    Molto spesso infatti si usano metodi per non fare tutti i passaggi (decifrare solo una parte).
+
+
+#### come funziona
+
+Il mittente deve mandare al destinatario un testo cifrato che solo il destinatario e' in grado di decifrare.
+Il mittente cifra il testo usando la chiave pubblica del destinatario.
+Manda il messaggio e il gioco e' fatto.
+Cio' garantisce la proprieta' di `segretezza`.
+
+Se invece:
+Il mittente cifra il testo usando la sua chiave privata.
+Manda il messaggio e il destinatario decifra usando la chiave pubblica del mittente...
+Ma cosi' ovviamente e' una cazzata, tutti possono decifrare il messaggio...
+Pero' e' un metodo per garantire l'autenticazione del `mittente`, l'`integrita'` del messaggio e la sua `non repudiabilita'`.
+Immagina infatti di essere il destinatario di suddetto messaggio, se scopri che usando la chiave pubblica di tizio1 viene un messaggio chiaro sensato allora sai che lui e' proprio chi pensavi che fosse.
+
+Per avere tutte le proprieta' insieme si fondono le due tecniche insieme.
+Guarda la slide a pag12.
+
+Pro: non devi scambiarti chiavi segrete.
+
+
+## Funzione hash
+lo sai dai.
+
+A volte si scambia il termine funzione checksum e funzione hash ma di base sono diverse.
+
+
+## Firma digitale (tecnica MAC)
+Introduzione_alla_crittografia.pdf su Virtuale.
+Slide 20.
+MAC - message authentication code.
+Il problema delle cifrature con chiave asimmetrica e' che ci vuole trooooppo tempo.
+E se non mi interessa la segretezza ma solo le altre 3 proprieta'? integrita' e autenticazione e non ripudiabilita'
+
+* MAC: si usa la crittografia simmetrica normalissima.
+* Firma digitale: crittografia asimmetrica
+
+( Slides: Se MD() e' la funzione, MD(m) e' il digest )
+
+Se riesci a decifrare il blocco del digest cifrato, non hai ancora la garanzia che il messaggio sia giusto ma che sia stato cifrato da alice si.
+Si ricalcola anche il digest del messaggio che e' stato mandato insieme al digest.
+Se i due digest combaciano allora sei sicuro anche della sicurezza del messaggio (che sia non modificato)
+
+
+Solo che sta roba ha lo stesso problema delle chiavi simmetriche.
+Servono un sacco di chiavi.
+Come si fa col problema di repository di pacchetti software (tipo AUR) che devono mandare pacchetti e tutti quelli che li scaricano devono essere certi della loro autenticita'???
+==>
+## Firma digitale
+Slide 21.
+
+Il destinatario del messaggio deve conoscere la chiave pubblica del mittente.
+Il mittente ha la sua chiave privata che usa per firmare e la pubblica per i destinatari che la useranno per confermare verificare l'autenticita' del messaggio.
+Abbastanza simile a prima, guarda slides.
+Molto piu' rapida de MAC.
+
+
+## PGP e GPG signature
+Ancora un altro meccanismo.
+Gnu Privacy Guard.
+Serve a garantire l'integrita' di un pacchetto software che viene distribuito da una repo di pacchetti.
+E' molto efficace, verifica l'integrita' e l'autenticazione ma e' anche leggerina.
+Oggi si usa GPG (e' open source), ma nasce prima PGP (Pretty good privacy) (non e' open source).
+Molto spesso si scambiano i termini ma sono cose diverse.
+
+
+
