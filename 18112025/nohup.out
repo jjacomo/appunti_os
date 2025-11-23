@@ -1,0 +1,29 @@
+[2025-11-18 23:30:23.380] [info] Using configuration file /home/jacomo/.config/waybar/config.jsonc
+[2025-11-18 23:30:23.381] [info] Unable to receive desktop appearance: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.Settings” on object at path /org/freedesktop/portal/desktop
+[2025-11-18 23:30:23.381] [info] Using CSS file /home/jacomo/.config/waybar/style.css
+[2025-11-18 23:30:23.383] [info] Hyprland IPC starting
+[2025-11-18 23:30:23.383] [info] Loading persistent workspaces from Hyprland workspace rules
+[2025-11-18 23:30:23.383] [warning] 'swap-icon-label' must be a bool.
+sh: line 1: swaync-client: command not found
+[2025-11-18 23:30:23.389] [error] notification stopped unexpectedly, is it endless?
+[2025-11-18 23:30:23.392] [info] Loading persistent workspaces from Hyprland workspace rules
+[2025-11-18 23:30:23.392] [warning] 'swap-icon-label' must be a bool.
+sh: line 1: swaync-client: command not found
+[2025-11-18 23:30:23.395] [error] notification stopped unexpectedly, is it endless?
+[2025-11-18 23:30:23.615] [warning] Requested height: 40 is less than the minimum height: 42 required by the modules
+[2025-11-18 23:30:23.615] [info] Bar configured (width: 1920, height: 42) for output: HDMI-A-5
+[2025-11-18 23:30:23.615] [warning] Requested height: 40 is less than the minimum height: 42 required by the modules
+[2025-11-18 23:30:23.615] [info] Bar configured (width: 2560, height: 42) for output: DP-3
+[2025-11-18 23:32:40.607] [info] Hyprland config reloaded, reinitializing hyprland/workspaces module...
+[2025-11-18 23:32:40.644] [info] Loading persistent workspaces from Hyprland workspace rules
+[2025-11-18 23:32:40.645] [info] Hyprland config reloaded, reinitializing hyprland/workspaces module...
+[2025-11-18 23:32:40.646] [info] Loading persistent workspaces from Hyprland workspace rules
+[2025-11-18 23:33:09.259] [info] Hyprland config reloaded, reinitializing hyprland/workspaces module...
+[2025-11-18 23:33:09.309] [info] Loading persistent workspaces from Hyprland workspace rules
+[2025-11-18 23:33:09.309] [info] Hyprland config reloaded, reinitializing hyprland/workspaces module...
+[2025-11-18 23:33:09.311] [info] Loading persistent workspaces from Hyprland workspace rules
+
+** (waybar:2565): WARNING **: 23:33:58.769: Status Notifier Host with bus name ':1.44' and object path '/StatusNotifierHost/0' is already registered
+
+** (waybar:2565): WARNING **: 23:33:58.769: Status Notifier Host with bus name ':1.44' and object path '/StatusNotifierHost/1' is already registered
+Gdk-Message: 23:34:18.306: Error reading events from display: Broken pipe

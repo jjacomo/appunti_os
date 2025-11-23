@@ -206,14 +206,63 @@ read -N 4 STRINGALUNGA4
 
 legge 4 caratteri alla volta (anche spazi e tutto il resto).
 
-il parametro `-u` ?? (per scegliere il file ?)
+il parametro `-u` ?? (per scegliere il file ?) SI GUARDA POCO PIU' AVANTI
 
 ## FILE 
 
-<!-- APERTURA: -->
-<!-- `exec fd>&-` -->
-<!-- CHIUSURA: -->
-<!-- `exec fd>&-` -->
+Il `file descriptor` e' un'astrazione per permettere l'accesso ai file (in scrittura/lettura).
+Ogni file descriptor e' rappresentato da un integer.
+Si usano sia in C che in bash. E' un concetto fornito dal sistema operativo.
+
+```c
+#define MAXSIZE 100
+#define nomefile "/home/vic/piffero.txt"
+
+void main(void) {
+    int fd, ris;
+    char buffer[MAXSIZE];
+    fd = open(nomefile, O_RDONLY);
+
+    if(fd < 0){
+        perror("open failed: ");
+        exit(1);
+    }
+
+    /* letture fino a raggiungere fine file */
+    do {
+        ris=read(fd, buffer, MAXSIZE);
+        if(ris<0){
+            perror("read failed: ");
+            exit(1); 
+        }
+    } while(ris>0);
+
+    close(fd):
+}
+```
+
+Ogni processo ha la sua `file descriptor table` che contiene puntatori alle informaioni sui file attualmente utilizzati (aperti) dal processo stesso.
+Contiene una riga (un intero) per ogni file usato dal processo (aperto).
+
+
+APERTURA:
+`exec fd>&-`
+CHIUSURA:
+`exec fd>&-`
+
+```bash
+exec {FD}< file
+# bash cerca un file descriptor libero: ad esempio 7
+# assegna quel numero alla variabile FD
+# apre il file in lettura e lo collega a quel FD
+```
+
+```bash
+read -u $FD VAR
+# Read non legge da stdin ma dal file associato a FD (che prima avevi aperto)
+```
+
+--- 
 
 Quando apri un file, devi specificare in che modo aprirlo (lettura/scrittura/append/lettura+scrittura).
 * SOLO LETTURA          `exec n<  path/to/file`

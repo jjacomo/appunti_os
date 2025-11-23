@@ -25,6 +25,8 @@
 ## Exit Status
 
 Slide 88
+0 = success
+1-255 = error
 
 ## FOR
 
@@ -42,8 +44,13 @@ es.
 for (( i=0 ; $i<13; i=$i+2 )) ; do echo ciao$i ; done
 ```
 
-## CONDIZIONALI
+## Compound Commands
 ```bash
-
+comando1 && comando2 # comando2 e' eseguito solo se comando1 va a buon fine
+comando1 || comando2 # comando2 e' eseguito solo se comando1 fallisce
+comando1 ; comando2 # esegue entrambi i comandi
 ```
+
+
+
 

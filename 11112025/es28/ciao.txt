@@ -1,0 +1,5 @@
+Scrivere un file di testo di almeno 5 righe, ciascuna contenente a*lmeno 7 parole
+separate da spazi e da tabulazioni. Mettete in qua*lche parola anche un asterisco *.
+Poi utiliz*zare il comando cut per v*isualizzare a video, di ciascuna riga, solo i caratteri
+dal terzo al quinto e dal dec*imo al quindicesimo, compresi gli estremi.
+ECCO VEDIAMO SE FUNZIONA DIOP*RO
