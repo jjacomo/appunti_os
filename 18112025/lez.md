@@ -353,6 +353,9 @@ Guarda la slide a pag12.
 Pro: non devi scambiarti chiavi segrete.
 
 
+Non repudiabilita' = il mantainer del codice che ha firmato il pacchetto non puo' dira "ah non e' mio, il mio software ti ha fritto il computer ma non e' colpa mia"
+
+
 ## Funzione hash
 lo sai dai.
 
@@ -390,12 +393,98 @@ Molto piu' rapida de MAC.
 
 
 ## PGP e GPG signature
+
 Ancora un altro meccanismo.
 Gnu Privacy Guard.
 Serve a garantire l'integrita' di un pacchetto software che viene distribuito da una repo di pacchetti.
 E' molto efficace, verifica l'integrita' e l'autenticazione ma e' anche leggerina.
 Oggi si usa GPG (e' open source), ma nasce prima PGP (Pretty good privacy) (non e' open source).
 Molto spesso si scambiano i termini ma sono cose diverse.
+
+
+
+---
+
+# 20/11/2025
+
+Lezione in aula con ghini.
+
+
+Torniamo al `GPG`.
+
+COme idealmente dovrebbe funzionare (come firma digitale):
+il mantainer manda messaggio (software) crittato con la sua private key, quelli che lo scaricano lo verificano con la sua chiave pubblica.
+
+### Come si reperisce la chiave pubblica?
+Quando installi un so con un immagine iso di solito contiene gia' anche le chiavi dei mantainer dei principali pacchetti software che usi in quella distro.
+Queste chiavi le trovi in delle directory predefinite (ad es: `/etc/apt/trusted.gpg.d` o `/usr/share/keyrings`, keyrings e' portachiavi infatti) (in pacman: `/usr/share/pacman/keyrings/` e `~/.local/share/keyrings/`. 
+
+Come fai se pero' il pacchetto che vuoi installare non e' in una repo di queste?
+Vuoi installare del software che non e' di arch ma da quelli di docker (perche' vuoi installare docker), qui il responsabile che deve verificare che la chiave sia quella giusta e' l'utente stesso.
+
+
+(nota a caso: con il comando wget puoi scaricare un file su un sito web, ma anche ricorsivamente tutti i file che sono linkati da quel sito web (tipo i link o risorse nei file html) e cosi' clonare un intero sito web)
+
+
+In realta' il mantainer non firma ciascun singolo package:
+firma un file di indice che contiene tutti i pacchetti del repository: mantiene tutti gli indici dei pacchetti, per ognuno c'e' la versione etc..
+
+Nei file.deb assieme al software ci sono scritte le dipendenze che devono essere installate, descrizioni...
+
+Ma prima di parlare di ste robe bisogna capire come funzionano i manager di pacchetti in linux:
+caso studio `apt`
+
+
+## gestione pacchetti apt
+
+Advanced package tool.
+
+Il sistema di gestione e' apt, il comando per installare\disintallare pacchetti e' apt-get.
+I comandi `apt` e `apt-get` sono molto simili, la differenza e' che apt ti fa vedere cose un po' piu' carine sul terminale, e' un po' piu' user friendly (apt e' pensato per chi lo usa manualmente), invece apt-get e' usato per gli script (o altri sistemi automatici), non ti fa vedere un cazzo di niente.
+
+In realta' quando apt ha scaricato un pacchetto lo deve installare fa riferimento a `dpkg` che si occupa di installarlo.
+dpkg e' usato anche per riconfigurare i pacchetti.
+
+`apt-cache` invece e' il comando che serve a fare ricerche dei pacchetti.
+
+
+### concetti
+
+* File `.deb`: tipicamente e' un archivio (gzippato) che contiene tutti i file necessari per il pacchetto software del software e poi dei metadati: versione, dipendenze, ...
+* `dipendenze`: altre librerie e software che servono al pacchetto per funzionare. Sono installate prima di installare il pacchetto (se non gia' installate). Di solito ti chiede conferma se deve installare anche le dipendenze. C'e' il flag -y che ti fa rispondere si automaticamente. In alcuni casi quando installi i pacchetti ti possono fare altre domande (tipo il pacchetto per le date ti chiede il fuso orario), per ovviare a questo problema puoi preconfigurare anche le risposte.
+* `repository`: Sono dei contenitori di software con un interfaccia organizzata ben specifica. Sono enormi cataloghi di software. Di solito sono remoti. Ma ad esempio possono anche essere nella nostra azienda (dove metti un database con tutti i software che devono stare in tutte le macchine dell'azienda) per motivi di efficienza e sicurezza (e poi magari e' software dell'azienda stessa).
+* `database locale dei pacchetti`: apt mantiene in locale un elenco con i nomi e versioni di tutti i pacchetti installati sul tuo sistema. Con `apt update` scandisce tutto questo elenco e fa tutti gli aggiornamenti del caso. E' importante fare l'update prima di installare un nuovo pacchetto cosi' ... (nn ho cpt ma e' importante). Nota infatti che quando fai pacman -Syu all'inizio dice `synchronizing package databases`
+
+
+### comandi
+
+tutto funziona anche per apt-get
+
+* apt install pacchetto
+* apt remove pacchetto: lascia i file di configurazione
+* apt purge pacchetto: rimuove anche i file di configurazione di installazione (ricorda 'date')
+* apt autoremove: rimuove delle dipendenze che non sono piu' utilizzate automaticamente
+* apt clean: cancella i file .deb scaricati nella cache locale
+
+
+### posizione dei repository
+
+Elenchi locali dei repository da cui apt scarica i pacchetti: `/etc/apt/sources.list` ma adesso veramente si trova nella cartella `/etc/apt/sources.list.d/` (d sta per directory).
+
+
+Mi manca la slide 4 che non ci ho capito un granche' perhc' mi sono perso l'inizio.
+
+Quando scarichi un pacchetto di salvi anche la chiave GPG sua pubblica e poi metti queste informazioni nel file deb?? o quello indice dove ci sono tutti i pacchetti.
+
+SLide 7 comando per salvare le chiavi gpg
+
+
+
+
+
+
+
+
 
 
 
