@@ -480,9 +480,9 @@ SLide 7 comando per salvare le chiavi gpg
 
 
 
+# 25/11/2025
 
-
-
+vai a dir 25112025
 
 
 
