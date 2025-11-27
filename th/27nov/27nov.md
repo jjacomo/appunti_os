@@ -52,4 +52,72 @@ maggiore di quella disponibile
 * la memoria virtuale può diminuire le prestazioni di un sistema
 se implementata (e usata) nel modo sbagliato
 
+Cio' funziona perche':
+non è necessario che l'intero spazio di indirizzamento logico di un processo sia in memoria infatti:
+i processi non utilizzano tutto il loro spazio di indirizzamento contemporaneamente.
+
+### Implementazione
+
+ogni processo ha accesso ad uno spazio di indirizzamento virtuale che può essere più grande di quello fisico
+* gli indirizzi virtuali
+    ■ possono essere mappati su indirizzi fisici della memoria principale
+    ■ oppure, possono essere mappati su memoria secondaria
+* in caso di accesso ad indirizzi virtuali mappati in memoria
+secondaria:
+    ■ i dati associati vengono trasferiti in memoria principale
+    ■ se la memoria è piena, si sposta in memoria secondaria i dati contenuti in memoria principale che sono considerati meno utili
+
+Paginazione a richiesta (`demand paging`)
+* si utilizza la tecnica della paginazione, ammettendo però che alcune pagine possano essere in memoria secondaria.
+
+Nella tabella delle pagine
+* si utilizza un bit (v, per valid) che indica se la pagina è presente in memoria centrale oppure no.
+
+C'e' il modulo "Pager" del sistema operativo che si occupa di caricare la pagina mancante in memoria, e di aggiornare di conseguenza la tabella delle pagine.
+
+
+### politiche di rimpiazzameto
+
+quando e' necessario liberare un frame (per metterlo in memoria secondaria) in che modo lo faccio?
+
+#### FIFO
+
+Viene segnato come vittima (il frame da rimpiazzare) il primo frame che era stato messo (che c'e' da piu' tempo) (quello piu' vecchio).
+
+Non e' particolarmente efficente, magari tolgo dei frame che mi sarebbero serviti molto.
+
+
+#### MIN
+
+Sarebbe l'algoritmo ottimale ma per implementarlo dovresti predirre il futuro.
+Infatti seleziona come vittima la pagina che sara' (impossibile saperlo) meno usata in futuro.
+
+
+#### LRU
+
+seleziona come pagina vittima la pagina che è stata usata meno recentemente nel passato.
+E' basato sul presupposto che la distanza tra due riferimenti successivi alla stessa pagina non vari eccessivamente.
+Stima la distanza nel futuro utilizzando la distanza nel passato.
+
+
+Modo per approssimare LRU: Additional-reference-bit-algorithm
+
+Second chance algoritm:
+Ogni volta che uso una pagina metto un bit di controllo a 1. L'algoritmo di rimpiazzamento cicla tutte le pagine e vede quelle che non sono messe a 1 e le rimpiazza, poi aspetta per vedere le pagine che vengono rimesse a 1 e poi continua cosi'.
+
+
+### Trashing
+
+E' il fatto di impiegare piu' tempo a rimpiazzare processi che effettivamente farli runnare.
+
+C'e' una treshold di processi in esecuzione che a una certa se ne aggiungi altri non viene piu' sfruttata meglio la cpu (ad eseguire piu' processi contemporaneamente) ma viene impiegato piu' tempo a scrivere e leggere dal disco e quindi la CPU sta ferma.
+
+
+### working set 
+NON LO FACCIAMO
+
+
+
+
+
 

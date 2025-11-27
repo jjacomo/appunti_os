@@ -7,10 +7,11 @@ if [[ ! $# -eq 1 ]]; then
     echo inserisci solo un numero
 fi
 
-COUNT=0
-echo $COUNT
+COUNT=$1
 
 for ((i = 0; i < $COUNT; i++)); do
+    echo -n " . $BASHPID"
     sleep 1
-    echo -n ". $PID"
 done
+
+echo
