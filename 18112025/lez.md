@@ -118,7 +118,7 @@ Ogni terminale che hai aperto e' completamente separato da un altro, identifica 
 
 Se cade il terminale di controllo il sistema operativo ammazza la bash interattiva e tutti i processi sottostanti (lanciando un segnale `SIGHUP` (signal hang up)).
 Per lanciare un processo (magari che dura molto) (utile per quando si esegue con ssh) che sopravviva questo omicidio esiste il comando `disown` che sgancia il processo dalla sessione che appartiene al terminale di controllo.
-Disown funziona quando il processo era gia' stato lanciato, se vuoi lanciarlo direttamete sganciato proprio quando avvii il provesso c'e' il comando `nohup`.
+Disown funziona quando il processo era gia' stato lanciato, se vuoi lanciarlo direttamete sganciato proprio quando avvii il processo c'e' il comando `nohup`.
 
 ### background foreground
 
@@ -143,6 +143,8 @@ jobs # ti fa vedere i jobs correntemente in esecuzione
 ```
 
 ## robe 
+
+<span style="color:red">ciao</span>
 
 ```bash
 ^C # termina il processo in foreground
