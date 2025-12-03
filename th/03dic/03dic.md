@@ -1,0 +1,74 @@
+# INTRO
+
+Oggi esercizi su caricamento della memoria, e poi cambiamo argomento.
+Ultima parte del corso.
+La prossima settimana e' l'ultima.
+Faremo accenni sulla sicurezza.
+
+paginazione, segmentazione, memoria virtuale....
+
+
+## ESERCIZIO
+
+Pag.122
+Si consideri la seguente sequenza di riferimenti di memoria,
+nel caso di un programma di 490 parole (word)
+10, 132, 250, 320, 25, 110, 480, 28, 132, 250, 370, 485.
+
+* si determini la stringa di riferimenti delle pagine, supponendo
+che la dimensione delle pagine sia di 100 parole.
+
+Memoria Logica:
+
+|`pagine` |1|2|3|4|5| 
+|---|---|---|---|---|---|
+|`word`|fino a 100|da 100 a 200|a 300|400|500|
+
+
+
+* Quante page fault si verificheranno se assumiamo una politica
+di rimpiazzamento FIFO con 3 blocchi fisici? E con 4 blocchi?
+
+con tre blocchi sono 9
+
+|`blocchi` |
+|-|
+|1| 
+|-|
+|.|
+|-|
+| . |   fa caricament
+
+|`blocchi` |
+|---|
+|  1|
+
+Rimpiazzo ogni volta il primo che avevo messo
+
+* quante page fault si verificheranno se assumiamo una politica
+di rimpiazzamento ottimo con 3 blocchi fisici? E con 4 blocchi?
+
+Rimpiazzo ogni volta quello che mi servira' piu' tardi (lo vedo nella sequenza (guardando nel futuro))
+DAI MA E' STRA EASY
+
+
+## ESERCIZIO 2
+
+Pag128
+Lo stesso ma con algoritmo LRU (least recently used)
+Sostituisco la pagina che non uso da piu' tempo.
+E' NA STRONZATA PURE QUESTO.
+
+
+E per la prima ora abbiamo fatto....
+Mamma mia che coglione...
+
+
+# SICUREZZA
+
+Molto discorsivo, ora sta parlando di crittografia
+
+
+
+
+
