@@ -66,7 +66,23 @@ Mamma mia che coglione...
 
 # SICUREZZA
 
-Molto discorsivo, ora sta parlando di crittografia
+L'asimmetrica serve per:
+* verificare l’identità del server (certificati) (o un utente)
+* scambiarsi un segreto iniziale in modo sicuro
+* avviare una sessione
+
+Quando “usi Internet” in modo sicuro (HTTPS):
+
+Il tuo device parla col server usando RSA/ECC (asimmetrica) per scambiarsi una chiave.
+Da quel momento usano solo AES o ChaCha20 (simmetrica) per cifrare tutto il traffico.
+Questo è il cuore della sicurezza moderna su Internet.
+
+## chiave pubblica (asimmetrica)
+Molto discorsivo, ora sta parlando di crittografia.
+Ogni utente linux puo' creare una coppia di chiavi, 1 pubblica e 1 privata.
+Alice vuole mandare -> privata Alice -> pubblica Bob -> internet -> priv Bob -> pub Ali -> Bob puo' leggere
+
+In questo modo Bob e' sicuro che sia il messaggio sia di alice e che nessuno lo abbia letto
 
 
 
