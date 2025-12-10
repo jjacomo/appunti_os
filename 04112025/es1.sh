@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # find /usr/include -type d -executable
 
 # -amin n
