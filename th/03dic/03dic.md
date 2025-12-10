@@ -85,6 +85,7 @@ Alice vuole mandare -> privata Alice -> pubblica Bob -> internet -> priv Bob -> 
 In questo modo Bob e' sicuro che sia il messaggio sia di alice e che nessuno lo abbia letto
 
 
+# 10/12/2025
 
-
+Mamma mia sono le lezioni piu' inutili dell'universo.
 
