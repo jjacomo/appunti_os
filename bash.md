@@ -35,6 +35,14 @@ ${ nome_della_variabile } # se poi dopo il carattere '}'
 $nome_della_variabile
 ```
 
+### Operatore ${!
+
+```bash
+varA=pippo
+nomevar=varA
+echo ${!nomevar} # stampa a video pippo
+```
+
 ### PATH VARIABLE
 
 La variabile PATH contiene una sequenza di percorsi assoluti nel filesystem di
@@ -222,5 +230,65 @@ Ci sono anche `*`, `?` ma li sai gia'.
 ---
 
 ## Parameter expansion
+
+- `$#`  il numero di argomenti passati allo script
+- `$0`  il nome del processo in esecuzione
+- `$1`  il primo argomento, $2 il secondo...
+- `$*`  tutti gli argomenti concatenati separati da spazi
+- `$@`  come $* ma se quotato gli argomenti vengono quotati separatamente
+
+- `$?`  l'exit status dell'ultimo comando eseguito ( 0 = SUCCESS, 1-255 ERROR )
+
+#### FINEZZA
+```bash
+for name in $*; do
+    echo $name
+done
+```
+
+attento che cosi' se passi gli argomenti: "trota salmone" sgombro
+che pensi che sarebbero 2 (e lo sono) il for ne vede 3
+(i doppi apici vengono rimossi!!)
+
+attento a non fare
+for name in "$*" ...
+cosi' vede sono un unico name bello lungo (e' un unica stringa)
+PERO' PUOI FARE
+for name in "$@" ...
+e cosi' funziona anche se metti degli input tra doppi apici
+funziona perche' $@ in realta' e' un vettore e quando lo
+scrivo tra apici doppi mi quota dentro gli apici ogni casella
+del vettore!
+
+
+---
+
+## Operatori (()) e $(()) (Arithmetic expansion)
+
+- `(())`   valuta le espressioni aritmetiche al suo interno
+    ```bash
+    (( NUM=3+2))
+    ```
+
+    Assegna 5 alla variabile NUM
+
+- `$(())`  e' come (()) ma puo' essere usato in una parte della riga di comando 
+         e non tutta come richiede (())
+
+Puoi fare:
+* aritmetica: `+`, `-`, `*`, `/`, `%`.
+* assegmaneti
+* usare () per accorpare
+
+POSSO ESSERE UTILIZZATE COME CONDIZIONE DI WHILE, IF E FOR
+
+```bash
+if (( 5 >= 2 )) ; then
+    echo questo viene stampato
+fi
+```
+
+---
+
 
 
