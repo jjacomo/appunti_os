@@ -43,6 +43,14 @@ nomevar=varA
 echo ${!nomevar} # stampa a video pippo
 ```
 
+### Operatore ${#
+
+``` bash
+NUM=123
+echo ${#NUM}
+#stampa la lunghezza della variabile (in questo caso 3)
+```
+
 ### PATH VARIABLE
 
 La variabile PATH contiene una sequenza di percorsi assoluti nel filesystem di
@@ -221,9 +229,7 @@ echo a{b,c{4..7}}m
 Ci sono anche `*`, `?` ma li sai gia'. 
 
 * `[abk]` puo’ essere sostituito da un solo carattere tra a b oppure k.
-* `[1-7]` puo’ essere sostituito da un solo carattere tra 1 2 3 4 5 6 oppure 7.
-* `[c-f]` puo’ essere sostituito da un solo carattere tra c d e oppure f.
-* `[[:digit:]]` puo’ essere sostituito da un solo carattere numerico (una cifra).
+* `[1-7]` puo’ essere sostituito da un solo carattere tra 1 2 3 4 5 6 oppure 7. `[c-f]` puo’ essere sostituito da un solo carattere tra c d e oppure f. `[[:digit:]]` puo’ essere sostituito da un solo carattere numerico (una cifra).
 * `[[:upper:]]` puo’ essere sostituito da un solo carattere maiuscolo.
 * `[[:lower:]]` puo’ essere sostituito da un solo carattere minuscolo.
 
@@ -289,6 +295,146 @@ fi
 ```
 
 ---
+
+## File Descriptors
+
+Il file descriptor è un'astrazione per permettere l'accesso ai file.
+Ogni file descriptor e’ rappresentato da un integer.
+
+Ogni processo ha la propria `file descriptor table` che contiene (indirettamente) le
+informazioni sui file attualmente utilizzati (aperti) dal processo stesso. In particolare, la file
+descriptor table contiene un file descriptor (un intero) per ciascun file usato dal processo.
+Per ciascuno di questi file descriptor, la tabella del processo punta ad una tabella di sistema
+che contiene le informazioni sui tutti i file attualmente aperti dal processo stesso
+
+Quando un programma entra in esecuzione l'ambiente del sistema operativo si incarica
+di aprire 3 flussi di dati standard, che sono:
+
+* `STANDARD INPUT` (stdin) serve per l'input normale (per default da tastiera). Viene
+identificato da una costante valore numerico `0`.
+* `STANDARD OUTPUT` (stdout) serve per l'output normale (per default su schermo
+video). Viene identificato da una costante valore numerico `1`.
+* `STANDARD ERROR` (stderr) serve per l'output che serve a comunicare messaggi di
+errore all'utente (per default anche questo su schermo video). Viene identificato da
+una costante valore numerico `2`
+
+Una shell B figlia di una shell padre A (e in generale, un processo B figlio di un
+processo A) `eredita una copia` della tabella dei file aperti del padre, quindi padre e
+figlio leggono e scrivono sugli stessi stream.
+
+---
+
+## Command Substitution
+
+```bash
+OUT=$( ./bob.sh )
+# in out ci finisce l'output di bob.sh
+```
+
+---
+
+## Espressioni Condizionali
+
+Ciascuna espressione condizionale si scrive mettendo le condizioni da valutare tra
+doppie parentesi quadre `[[ .... ]]`.
+Queste restituiscono un valore o 0 (vero) o 1 (falso)
+
+
+- `!`     NOT
+- `&&`    AND
+- `||`    OR
+
+si scrive cosi'
+
+``` bash
+
+[[ ( (condA)&&(condB) ) || condC ]]
+# le tonde servono per dare l'ordine di esecuzione
+```
+
+supporta la valutazione aritmetica.
+
+Un po' di operatori:
+operatore `-e` <nomefile>":
+returna 0 se il file non esiste?
+operatore `-d` <nomedir>":
+returna 0 se la dir non esiste?
+operatore <nomefile> `-nt` <nomefile>":
+confronta le date di ultima modifica
+operatore `-r` <nomefile>:
+ti dice se o user corrente ha il permesso di lettura
+e molti altri...
+
+
+### scarrellata di operatori:
+
+* aritm   lessicografici
+* -eq   =
+* -ne   !=
+* -le   <=
+* -lt   <
+* -ge   >
+* -gt   >=
+
+gli operatori <, =, ... fanno i confronti lessicografici in ASCII
+
+es
+``` bash
+[[ 3 -le 5 ]]
+
+echo $?
+```
+
+stampa 0 (vero)
+(falso e' 1)
+
+* Operatore `-z` <stringa>: 
+  da 0 (true) se la stringa ha lunghezza 0 (quindi in sostanza ci chiediamo se la variabile esiste)
+
+es.
+``` bash
+#non ho creato NUM
+[[ -z $NUM ]]
+echo $?
+#stampa 0
+```
+
+Analogamente `-n` <stringa>:
+da 0 se la stringa e' piu' lunga di 0 (non e' vuota)
+
+
+### Condizioni su file
+
+`-d` file       True if file exists and is a directory.
+`-e` file       True if file exists.
+`-f` file       True if file exists and is a regular file.
+`-h` file       True if file exists and is a symbolic link.
+`-r` file       True if file exists and is readable.
+`-s` file       True if file exists and has a size greater than zero.
+`-t` fd         True if file descriptor fd is open and refers to a terminal.
+`-w` file       True if file exists and is writable.
+`-x` file       True if file exists and is executable.
+`-O` file       True if file exists and is owned by the effective user id.
+`-G` file       True if file exists and is owned by the effective group id.
+`-L` file       True if file exists and is a symbolic link. (deprecated, see -h)
+
+
+es
+``` bash
+if [[ -n $(name) && -e $(name) ]] ; then
+    echo "esiste $(name), lo elimino";
+    rm -f $(name)
+fi ;
+```
+
+---
+
+## Lettura da stdin (read)
+
+```bash
+read RIGA
+```
+
 
 
 
